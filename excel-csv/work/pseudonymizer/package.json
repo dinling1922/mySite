@@ -1,0 +1,12 @@
+{
+  "name": "local-pii-pseudonymizer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local-only Excel and CSV pseudonymization tool",
+  "scripts": {
+    "test": "node tests/core.test.js"
+  },
+  "dependencies": {
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  }
+}

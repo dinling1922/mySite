@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="在瀏覽器本機處理 Excel 與 CSV，辨識敏感欄位並產生可逆的假名化代碼與對照表。">
+  <meta name="color-scheme" content="dark light">
+  <title>個資假名化工具</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="vendor/xlsx.full.min.js" defer></script>
+  <script src="core.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#main" aria-label="回到工具頂端">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.7 2.8 8.4 7 10 4.2-1.6 7-5.3 7-10V6l-7-3Z"/><path d="m9.3 12 1.7 1.7 3.9-4"/></svg>
+        </span>
+        <span>個資假名化工具</span>
+      </a>
+      <div class="local-badge"><span aria-hidden="true"></span>僅在此裝置處理</div>
+    </header>
+
+    <main id="main">
+      <section class="workspace-heading" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">LOCAL PRIVACY WORKSPACE</p>
+          <h1 id="page-title">把真實身分換成可追蹤的代碼</h1>
+          <p class="lead">匯入 Excel 或 CSV，確認敏感欄位後執行假名化。同一筆原始資料會取得相同代碼，跨列與跨工作表的關聯仍可保留。</p>
+        </div>
+        <aside class="privacy-panel" aria-label="隱私處理說明">
+          <div class="privacy-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.2"/></svg>
+          </div>
+          <div><strong>資料不離開瀏覽器</strong><span>不需登入、不連接資料庫、不把檔案傳到伺服器。</span></div>
+        </aside>
+      </section>
+
+      <ol class="stepper" aria-label="處理步驟">
+        <li id="step-upload" class="is-active"><span>1</span><div><strong>匯入檔案</strong><small>Excel 或 CSV</small></div></li>
+        <li id="step-review"><span>2</span><div><strong>覆核欄位</strong><small>調整處理方式</small></div></li>
+        <li id="step-export"><span>3</span><div><strong>下載結果</strong><small>資料與對照表</small></div></li>
+      </ol>
+
+      <section class="upload-card" aria-labelledby="upload-title">
+        <div id="dropzone" class="dropzone">
+          <input id="file-input" type="file" accept=".xlsx,.xls,.csv" hidden>
+          <div class="upload-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M5 15v4h14v-4"/></svg>
+          </div>
+          <div>
+            <h2 id="upload-title">將檔案拖曳到這裡</h2>
+            <p>支援 .xlsx、.xls、.csv，單檔上限 30 MB</p>
+          </div>
+          <div class="upload-actions">
+            <button id="choose-file" class="button primary" type="button">選擇檔案</button>
+            <button id="load-demo" class="button ghost" type="button">載入示範資料</button>
+          </div>
+          <div id="file-summary" class="file-summary" hidden></div>
+        </div>
+        <div id="error-message" class="error-message" role="alert" hidden></div>
+        <p class="upload-note">自動辨識會同時參考欄名與內容格式。正式輸出前仍應逐欄覆核。</p>
+      </section>
+
+      <section id="review-section" class="review-section" aria-labelledby="review-title" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">STEP 2</p>
+            <h2 id="review-title">覆核敏感欄位</h2>
+            <p>「中」與「高」信心欄位預設使用代碼取代。其他欄位會保留原值。</p>
+          </div>
+          <div class="heading-actions">
+            <button id="select-detected" class="button secondary" type="button">重設為自動建議</button>
+            <button id="reset-tool" class="button ghost danger" type="button">清除本次資料</button>
+          </div>
+        </div>
+
+        <div id="detection-stats" class="stats" aria-live="polite"></div>
+
+        <div class="table-card">
+          <div class="table-scroll">
+            <table class="field-table">
+              <thead>
+                <tr>
+                  <th>工作表</th>
+                  <th>欄位與遮罩範例</th>
+                  <th>辨識結果</th>
+                  <th>信心</th>
+                  <th>資料類型</th>
+                  <th>處理方式</th>
+                </tr>
+              </thead>
+              <tbody id="column-rows"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="preview-card">
+          <div class="preview-heading"><div><span>輸出預覽</span><strong id="preview-sheet"></strong></div><small>原始敏感值不會直接顯示</small></div>
+          <div class="table-scroll compact">
+            <table class="preview-table"><thead id="preview-head"></thead><tbody id="preview-body"></tbody></table>
+          </div>
+        </div>
+
+        <div class="process-bar">
+          <div><strong>代碼會在本次處理中保持一致</strong><span>例如相同 Email 在不同列或工作表都會取得同一個 EML-###### 代碼。</span></div>
+          <button id="process-data" class="button primary large" type="button">執行假名化</button>
+        </div>
+      </section>
+
+      <section id="result-section" class="result-section" aria-labelledby="result-title" hidden>
+        <div class="result-status">
+          <span class="result-check" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8"/></svg>
+          </span>
+          <div><p class="section-kicker">STEP 3</p><h2 id="result-title">假名化完成</h2><p>請分別下載處理後資料與對照表。</p></div>
+        </div>
+        <div id="result-summary" class="result-summary"></div>
+        <div class="download-grid">
+          <article>
+            <span class="download-label">處理後資料</span>
+            <h3>可交付或用於分析</h3>
+            <p>已依覆核規則取代敏感欄位，保留原始資料結構與關聯。</p>
+            <button id="download-data" class="button primary" type="button">下載假名化檔案</button>
+          </article>
+          <article class="mapping-card">
+            <span class="download-label warning">敏感檔案</span>
+            <h3>代碼對照表</h3>
+            <p>含原始個資。請與處理後資料分開保存，並限制可存取的人員。</p>
+            <button id="download-map" class="button secondary" type="button">下載對照表</button>
+          </article>
+        </div>
+        <button id="start-over" class="button ghost" type="button">處理另一個檔案並清除本次資料</button>
+      </section>
+    </main>
+
+    <footer><p>所有處理均在本機瀏覽器記憶體中完成。關閉或重新整理頁面後，本次資料不會保留。</p></footer>
+  </div>
+</body>
+</html>
