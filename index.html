@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>趙翊君 Lala Chao｜AI 工具教練 / 企業 AI 工作坊講師</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="回到頁首">
+        <img src="./assets/lala-headshot.png" alt="趙翊君頭像" />
+        <span>Lala Chao</span>
+      </a>
+      <nav aria-label="主要導覽">
+        <a href="#projects">作品</a>
+        <a href="#career-map">學習地圖</a>
+        <a href="#experience">經歷</a>
+        <a href="#resume104">104 摘要</a>
+        <a href="mailto:dinling1922@gmail.com" class="nav-cta">聯絡</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">AI 工具教學 / 企業內訓 / 手把手工作坊</p>
+          <h1 id="profile-name">趙翊君</h1>
+          <p class="hero-title" id="profile-title"></p>
+          <p class="hero-summary" id="profile-summary"></p>
+          <div class="target-roles" aria-label="可投職稱">
+            <span>可投職稱</span>
+            <div id="target-roles"></div>
+          </div>
+          <div class="hero-actions">
+            <a href="#projects" class="button primary">查看作品</a>
+            <button class="button secondary" id="copyContact">複製聯絡資訊</button>
+          </div>
+          <div class="tag-row" id="profile-tags"></div>
+        </div>
+        <figure class="hero-photo">
+          <img src="./assets/lala-portrait.png" alt="趙翊君形象照" />
+          <figcaption>更新日期 <span id="updated-at"></span></figcaption>
+        </figure>
+      </section>
+
+      <section class="metrics" id="highlights" aria-label="重點摘要"></section>
+
+      <section class="section split">
+        <div>
+          <p class="section-kicker">Positioning</p>
+          <h2>新版履歷主軸</h2>
+          <p>
+            這一版把原本的客服、行政、培訓與 SOP 能力，重新包裝成「能理解 AI 工具、做出示範應用，並帶企業員工一步一步上手」。
+          </p>
+        </div>
+        <div class="capability-grid" id="capabilities"></div>
+      </section>
+
+      <section class="section" id="projects">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Portfolio</p>
+            <h2>互動式作品集</h2>
+          </div>
+          <div class="filters" id="filters" aria-label="作品篩選"></div>
+        </div>
+        <div class="project-grid" id="project-grid"></div>
+      </section>
+
+      <section class="section" id="career-map">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Career Map</p>
+            <h2 id="career-map-title"></h2>
+          </div>
+          <p class="section-note" id="career-map-note"></p>
+        </div>
+        <div class="role-map" id="role-map"></div>
+        <div class="learning-layout">
+          <div>
+            <h3>90 天學習路線</h3>
+            <div class="roadmap-list" id="roadmap-list"></div>
+          </div>
+          <aside class="packaging-box">
+            <h3>作品包裝格式</h3>
+            <div class="packaging-list" id="packaging-list"></div>
+            <div class="source-list" id="source-list"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="experience">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Experience</p>
+            <h2>工作經歷</h2>
+          </div>
+          <p class="section-note">保留完整職涯脈絡，但用新版方向重寫重點。</p>
+        </div>
+        <div class="timeline" id="timeline"></div>
+      </section>
+
+      <section class="section split" id="resume104">
+        <div>
+          <p class="section-kicker">104 Draft</p>
+          <h2>104 可用摘要</h2>
+          <p>
+            這裡先作為最新版文字草稿，之後要正式投遞時再依職缺濃縮貼到 104。
+          </p>
+          <button class="button secondary" id="copy104">複製 104 摘要</button>
+        </div>
+        <div class="resume-box">
+          <h3 id="resume104-headline"></h3>
+          <p id="resume104-summary"></p>
+        </div>
+      </section>
+
+      <section class="section compact">
+        <p class="section-kicker">Credentials</p>
+        <h2>證照與能力</h2>
+        <div class="credential-list" id="credentials"></div>
+      </section>
+    </main>
+
+    <dialog id="project-dialog">
+      <div class="dialog-shell">
+        <button class="icon-button" id="close-dialog" aria-label="關閉">×</button>
+        <p class="section-kicker" id="dialog-type"></p>
+        <h2 id="dialog-title"></h2>
+        <p id="dialog-summary"></p>
+        <div class="dialog-gallery" id="dialog-gallery"></div>
+        <div class="dialog-tools" id="dialog-tools"></div>
+        <h3>成果亮點</h3>
+        <ul id="dialog-impact"></ul>
+        <div class="dialog-links" id="dialog-links"></div>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./resume-data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
