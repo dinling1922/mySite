@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>差旅費申請表單</title>
+<style>
+  :root{
+    --bg:#f5f7fb; --card:#ffffff; --text:#1f2937; --muted:#6b7280; --line:#e5e7eb;
+    --primary:#2563eb; --primary-dark:#1d4ed8; --danger:#dc2626; --soft:#eef4ff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",Arial,sans-serif;color:var(--text)}
+  .wrap{max-width:1180px;margin:32px auto;padding:0 18px 48px}
+  .hero{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:18px}
+  .hero h1{margin:0;font-size:30px;letter-spacing:.5px}
+  .hero p{margin:7px 0 0;color:var(--muted)}
+  .badge{background:var(--soft);color:var(--primary);padding:8px 12px;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 12px 32px rgba(15,23,42,.05);padding:22px;margin-bottom:18px}
+  .section-title{font-size:18px;font-weight:800;margin:0 0 16px;display:flex;align-items:center;gap:8px}
+  .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+  .field{display:flex;flex-direction:column;gap:7px}
+  .field.span-2{grid-column:span 2}.field.span-4{grid-column:span 4}
+  label{font-size:13px;font-weight:700;color:#374151}
+  input,select,textarea{width:100%;border:1px solid #d1d5db;border-radius:10px;padding:10px 12px;font:inherit;background:#fff;outline:none;transition:.2s}
+  input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+  textarea{min-height:90px;resize:vertical}
+  .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}
+  table{width:100%;border-collapse:collapse;min-width:1000px;background:white}
+  th,td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+  th{font-size:12px;color:#4b5563;background:#f9fafb;position:sticky;top:0;z-index:1}
+  td input,td select{padding:8px 9px;border-radius:8px;font-size:14px}
+  .num{text-align:right}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+  button{border:0;border-radius:10px;padding:10px 15px;font:inherit;font-weight:800;cursor:pointer;transition:.18s}
+  button:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--primary);color:white}.btn-primary:hover{background:var(--primary-dark)}
+  .btn-soft{background:#eff6ff;color:#1d4ed8}.btn-gray{background:#f3f4f6;color:#374151}.btn-danger{background:#fff1f2;color:var(--danger)}
+  .delete-row{padding:7px 10px;background:#fff1f2;color:var(--danger);font-size:12px}
+  .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+  .summary-box{padding:14px 16px;border-radius:14px;background:#f8fafc;border:1px solid var(--line)}
+  .summary-box .k{font-size:12px;color:var(--muted);font-weight:700}.summary-box .v{font-size:22px;font-weight:900;margin-top:4px}
+  .summary-box.total{background:#eff6ff;border-color:#bfdbfe}.summary-box.total .v{color:var(--primary)}
+  .footnote{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6}
+  @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.field.span-4{grid-column:span 2}.summary{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:560px){.hero{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:1fr}.field.span-2,.field.span-4{grid-column:span 1}.summary{grid-template-columns:1fr}.wrap{margin-top:20px}.card{padding:16px}}
+  @media print{body{background:#fff}.actions,.badge,.delete-row{display:none!important}.card{box-shadow:none;border-color:#bbb}.wrap{max-width:none;margin:0;padding:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div>
+      <h1>差旅費申請表單</h1>
+      <p>填寫差旅資訊與費用明細，系統會自動加總並匯出 Excel。</p>
+    </div>
+    <div class="badge">單一 HTML｜可直接開啟使用</div>
+  </div>
+
+  <section class="card">
+    <h2 class="section-title">一、基本資料</h2>
+    <div class="grid">
+      <div class="field"><label>申請人 *</label><input id="applicant" required placeholder="例如：王小明"></div>
+      <div class="field"><label>部門 *</label><input id="department" required placeholder="例如：業務部"></div>
+      <div class="field"><label>員工編號</label><input id="employeeId" placeholder="例如：A1024"></div>
+      <div class="field"><label>申請日期</label><input id="applyDate" type="date"></div>
+
+      <div class="field"><label>出差開始日 *</label><input id="startDate" type="date" required></div>
+      <div class="field"><label>出差結束日 *</label><input id="endDate" type="date" required></div>
+      <div class="field span-2"><label>出差地點 *</label><input id="destination" required placeholder="例如：台中、高雄"></div>
+
+      <div class="field span-2"><label>出差事由 *</label><input id="purpose" required placeholder="例如：客戶拜訪／教育訓練／展會參訪"></div>
+      <div class="field"><label>專案 / 成本中心</label><input id="costCenter" placeholder="例如：AI-2026"></div>
+      <div class="field"><label>預支款</label><input id="advance" type="number" min="0" step="1" value="0" oninput="recalc()"></div>
+
+      <div class="field span-4"><label>備註</label><textarea id="notes" placeholder="可填寫特殊說明、主管核准資訊或其他補充。"></textarea></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="section-title">二、費用明細</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:55px">#</th>
+            <th style="width:125px">日期</th>
+            <th style="width:145px">費用類別</th>
+            <th>說明</th>
+            <th style="width:120px">交通起點</th>
+            <th style="width:120px">交通終點</th>
+            <th style="width:100px">數量</th>
+            <th style="width:120px">單價</th>
+            <th style="width:130px">金額</th>
+            <th style="width:90px">刪除</th>
+          </tr>
+        </thead>
+        <tbody id="expenseBody"></tbody>
+      </table>
+    </div>
+
+    <div class="actions">
+      <button class="btn-soft" type="button" onclick="addRow()">＋ 新增一筆</button>
+      <button class="btn-gray" type="button" onclick="window.print()">列印 / 存成 PDF</button>
+    </div>
+
+    <div class="summary">
+      <div class="summary-box"><div class="k">費用筆數</div><div class="v" id="countBox">0</div></div>
+      <div class="summary-box"><div class="k">費用合計</div><div class="v" id="subtotalBox">NT$ 0</div></div>
+      <div class="summary-box"><div class="k">預支款</div><div class="v" id="advanceBox">NT$ 0</div></div>
+      <div class="summary-box total"><div class="k">應補 / 應退</div><div class="v" id="balanceBox">NT$ 0</div></div>
+    </div>
+    <div class="footnote">應補 / 應退 = 費用合計 − 預支款。正數代表公司應補給員工；負數代表員工應退回公司。</div>
+  </section>
+
+  <section class="card">
+    <h2 class="section-title">三、匯出</h2>
+    <div class="actions">
+      <button class="btn-primary" type="button" onclick="exportExcel()">匯出 Excel</button>
+      <button class="btn-gray" type="button" onclick="saveDraft()">儲存草稿</button>
+      <button class="btn-gray" type="button" onclick="loadDraft()">載入草稿</button>
+      <button class="btn-danger" type="button" onclick="resetForm()">清空表單</button>
+    </div>
+    <div class="footnote">Excel 匯出使用瀏覽器產生 Excel 相容的 .xls 檔，不需要後端伺服器，也不需要額外安裝套件。</div>
+  </section>
+</div>
+
+<script>
+const categories = ['交通費','住宿費','餐費','停車費','油資','高鐵 / 台鐵','計程車','機票','雜支','其他'];
+
+function esc(s=''){
+  return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+}
+function fmt(n){return 'NT$ ' + Number(n||0).toLocaleString('zh-TW',{maximumFractionDigits:2});}
+
+function addRow(data={}){
+  const tbody=document.getElementById('expenseBody');
+  const tr=document.createElement('tr');
+  tr.innerHTML=`
+    <td class="row-no"></td>
+    <td><input type="date" class="e-date" value="${esc(data.date||'')}"></td>
+    <td><select class="e-cat">${categories.map(c=>`<option ${data.category===c?'selected':''}>${c}</option>`).join('')}</select></td>
+    <td><input class="e-desc" placeholder="例如：客戶拜訪車資" value="${esc(data.description||'')}"></td>
+    <td><input class="e-from" placeholder="起點" value="${esc(data.from||'')}"></td>
+    <td><input class="e-to" placeholder="終點" value="${esc(data.to||'')}"></td>
+    <td><input class="e-qty num" type="number" min="0" step="1" value="${data.qty??1}" oninput="rowCalc(this)"></td>
+    <td><input class="e-price num" type="number" min="0" step="0.01" value="${data.price??0}" oninput="rowCalc(this)"></td>
+    <td><input class="e-amount num" type="number" min="0" step="0.01" value="${data.amount??0}" oninput="manualAmount(this)"></td>
+    <td><button type="button" class="delete-row" onclick="deleteRow(this)">刪除</button></td>`;
+  tbody.appendChild(tr);
+  renumber(); recalc();
+}
+
+function rowCalc(el){
+  const tr=el.closest('tr');
+  const q=parseFloat(tr.querySelector('.e-qty').value)||0;
+  const p=parseFloat(tr.querySelector('.e-price').value)||0;
+  tr.querySelector('.e-amount').value=(q*p).toFixed(2);
+  recalc();
+}
+function manualAmount(){recalc();}
+function deleteRow(btn){
+  const rows=document.querySelectorAll('#expenseBody tr');
+  if(rows.length<=1){ alert('至少保留一筆費用明細。'); return; }
+  btn.closest('tr').remove(); renumber(); recalc();
+}
+function renumber(){document.querySelectorAll('.row-no').forEach((td,i)=>td.textContent=i+1);}
+function getExpenses(){
+  return [...document.querySelectorAll('#expenseBody tr')].map((tr,i)=>({
+    no:i+1,
+    date:tr.querySelector('.e-date').value,
+    category:tr.querySelector('.e-cat').value,
+    description:tr.querySelector('.e-desc').value,
+    from:tr.querySelector('.e-from').value,
+    to:tr.querySelector('.e-to').value,
+    qty:parseFloat(tr.querySelector('.e-qty').value)||0,
+    price:parseFloat(tr.querySelector('.e-price').value)||0,
+    amount:parseFloat(tr.querySelector('.e-amount').value)||0,
+  }));
+}
+function recalc(){
+  const items=getExpenses();
+  const subtotal=items.reduce((s,x)=>s+x.amount,0);
+  const advance=parseFloat(document.getElementById('advance').value)||0;
+  const balance=subtotal-advance;
+  document.getElementById('countBox').textContent=items.filter(x=>x.amount>0||x.description||x.date).length;
+  document.getElementById('subtotalBox').textContent=fmt(subtotal);
+  document.getElementById('advanceBox').textContent=fmt(advance);
+  document.getElementById('balanceBox').textContent=(balance<0?'-':'')+fmt(Math.abs(balance));
+}
+function formData(){
+  const expenses=getExpenses();
+  const subtotal=expenses.reduce((s,x)=>s+x.amount,0);
+  const advance=parseFloat(document.getElementById('advance').value)||0;
+  return {
+    applicant:applicant.value, department:department.value, employeeId:employeeId.value, applyDate:applyDate.value,
+    startDate:startDate.value,endDate:endDate.value,destination:destination.value,purpose:purpose.value,
+    costCenter:costCenter.value,advance,notes:notes.value,expenses,subtotal,balance:subtotal-advance
+  };
+}
+function validate(){
+  const required=['applicant','department','startDate','endDate','destination','purpose'];
+  for(const id of required){ const el=document.getElementById(id); if(!el.value.trim()){el.focus();alert('請完成必填欄位。');return false;} }
+  return true;
+}
+function exportExcel(){
+  if(!validate()) return;
+  const d=formData();
+  const rows=d.expenses.map(x=>`<tr><td>${x.no}</td><td>${esc(x.date)}</td><td>${esc(x.category)}</td><td>${esc(x.description)}</td><td>${esc(x.from)}</td><td>${esc(x.to)}</td><td>${x.qty}</td><td>${x.price}</td><td>${x.amount}</td></tr>`).join('');
+  const html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"><style>table{border-collapse:collapse}td,th{border:1px solid #888;padding:6px}th{background:#eaf2ff}.title{font-size:20px;font-weight:bold}</style></head><body>
+  <table>
+  <tr><td class="title" colspan="9">差旅費申請表單</td></tr>
+  <tr><th>申請人</th><td>${esc(d.applicant)}</td><th>部門</th><td>${esc(d.department)}</td><th>員工編號</th><td>${esc(d.employeeId)}</td><th>申請日期</th><td colspan="2">${esc(d.applyDate)}</td></tr>
+  <tr><th>出差期間</th><td colspan="2">${esc(d.startDate)} ~ ${esc(d.endDate)}</td><th>出差地點</th><td colspan="2">${esc(d.destination)}</td><th>專案 / 成本中心</th><td colspan="2">${esc(d.costCenter)}</td></tr>
+  <tr><th>出差事由</th><td colspan="8">${esc(d.purpose)}</td></tr>
+  <tr><th>備註</th><td colspan="8">${esc(d.notes)}</td></tr>
+  <tr><td colspan="9"></td></tr>
+  <tr><th>#</th><th>日期</th><th>費用類別</th><th>說明</th><th>交通起點</th><th>交通終點</th><th>數量</th><th>單價</th><th>金額</th></tr>
+  ${rows}
+  <tr><td colspan="7"></td><th>費用合計</th><td>${d.subtotal}</td></tr>
+  <tr><td colspan="7"></td><th>預支款</th><td>${d.advance}</td></tr>
+  <tr><td colspan="7"></td><th>應補 / 應退</th><td>${d.balance}</td></tr>
+  </table></body></html>`;
+  const blob=new Blob(['\ufeff',html],{type:'application/vnd.ms-excel'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  const who=(d.applicant||'申請人').replace(/[\\/:*?"<>|]/g,'_');
+  a.download=`差旅費申請_${who}_${d.applyDate||new Date().toISOString().slice(0,10)}.xls`;
+  document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(a.href);
+}
+function saveDraft(){localStorage.setItem('travelExpenseDraft',JSON.stringify(formData()));alert('草稿已儲存在此瀏覽器。');}
+function loadDraft(){
+  const raw=localStorage.getItem('travelExpenseDraft'); if(!raw){alert('找不到已儲存的草稿。');return;}
+  const d=JSON.parse(raw);
+  ['applicant','department','employeeId','applyDate','startDate','endDate','destination','purpose','costCenter','advance','notes'].forEach(id=>document.getElementById(id).value=d[id]??'');
+  expenseBody.innerHTML=''; (d.expenses?.length?d.expenses:[{}]).forEach(addRow); recalc();
+}
+function resetForm(){
+  if(!confirm('確定要清空所有資料嗎？')) return;
+  document.querySelectorAll('input,textarea').forEach(el=>{if(el.id==='advance')el.value=0;else el.value='';});
+  applyDate.value=new Date().toISOString().slice(0,10); expenseBody.innerHTML=''; addRow(); recalc();
+}
+
+applyDate.value=new Date().toISOString().slice(0,10);
+addRow();
+</script>
+</body>
+</html>
