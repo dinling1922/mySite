@@ -1,144 +1,446 @@
-<!doctype html>
-<html lang="zh-Hant">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>趙翊君 Lala Chao｜AI 工具教練 / 企業 AI 工作坊講師</title>
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <header class="topbar">
-      <a class="brand" href="#top" aria-label="回到頁首">
-        <img src="./assets/lala-headshot.png" alt="趙翊君頭像" />
-        <span>Lala Chao</span>
-      </a>
-      <nav aria-label="主要導覽">
-        <a href="#projects">作品</a>
-        <a href="#career-map">學習地圖</a>
-        <a href="#experience">經歷</a>
-        <a href="#resume104">104 摘要</a>
-        <a href="mailto:dinling1922@gmail.com" class="nav-cta">聯絡</a>
-      </nav>
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人簡歷 - AI 應用與企業培訓專家</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E40AF', // Blue-800
+                        secondary: '#F3F4F6', // Gray-100
+                        accent: '#F59E0B', // Amber-500
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #3B82F6, #60A5FA);
+        }
+        /* Mobile menu transition */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        #mobile-menu.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 antialiased selection:bg-blue-200 selection:text-blue-900 transition-colors duration-300">
+
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 font-bold text-xl text-primary dark:text-blue-400 tracking-wider">
+                    <a href="#home">Portfolio.</a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors duration-200 font-medium">關於我</a>
+                    <a href="#expertise" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors duration-200 font-medium">專業核心</a>
+                    <a href="#projects" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors duration-200 font-medium">實作案例</a>
+                    <a href="#vision" class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-blue-400 transition-colors duration-200 font-medium">未來展望</a>
+
+                    <!-- Utilities: Audio & Theme Toggle -->
+                    <div class="flex items-center space-x-3 pl-4 border-l border-gray-200 dark:border-gray-700">
+                        <!-- Music Toggle Button -->
+                        <button id="music-toggle-btn" title="播放/暫停背景音樂" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors relative">
+                            <i id="music-icon" class="fas fa-volume-mute"></i>
+                            <span id="music-wave" class="absolute -top-1 -right-1 flex h-3 w-3 hidden">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+                            </span>
+                        </button>
+
+                        <!-- Theme Toggle Button -->
+                        <button id="theme-toggle-btn" title="切換深色/淺色模式" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                            <i id="theme-icon" class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Controls & Menu Button -->
+                <div class="md:hidden flex items-center space-x-2">
+                    <button id="mobile-music-btn" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                        <i id="mobile-music-icon" class="fas fa-volume-mute"></i>
+                    </button>
+                    <button id="mobile-theme-btn" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+                        <i id="mobile-theme-icon" class="fas fa-moon"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="text-gray-600 dark:text-gray-300 hover:text-primary focus:outline-none p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hidden Audio Element -->
+    <audio id="bg-audio" loop preload="auto">
+        <source src="https://img.ai365.fans/artworks/e7da7802-c1ae-40df-bafc-d2c48866b21c/q2ubl9a1rqb.mp3" type="audio/mpeg">
+        您的瀏覽器不支援音訊元素。
+    </audio>
+
+    <!-- Mobile Menu Panel -->
+    <div id="mobile-menu" class="fixed inset-y-0 right-0 w-64 bg-white dark:bg-gray-800 shadow-2xl z-50 md:hidden flex flex-col pt-20 px-6">
+        <button id="close-menu-btn" class="absolute top-5 right-6 text-gray-500 dark:text-gray-400 hover:text-primary">
+            <i class="fas fa-times text-2xl"></i>
+        </button>
+        <a href="#about" class="mobile-link block py-4 text-lg border-b border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:text-primary">關於我</a>
+        <a href="#expertise" class="mobile-link block py-4 text-lg border-b border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:text-primary">專業核心</a>
+        <a href="#projects" class="mobile-link block py-4 text-lg border-b border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:text-primary">實作案例</a>
+        <a href="#vision" class="mobile-link block py-4 text-lg border-b border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:text-primary">未來展望</a>
+    </div>
+
+    <!-- Hero Section -->
+    <header id="home" class="pt-32 pb-20 md:pt-48 md:pb-32 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 min-h-screen flex items-center transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="text-center max-w-4xl mx-auto">
+                <span class="inline-block py-1 px-3 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-200 text-sm font-semibold mb-6 tracking-wide uppercase">AI 應用 × 企業培訓專家</span>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-gray-900 dark:text-white">
+                    將複雜的 AI 工具，轉化為<br class="hidden md:block"/> 
+                    <span class="gradient-text">人人皆可上手的行動力</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 leading-relaxed">
+                    擁有 12 年以上第一線客服與培訓經驗，擅長拆解複雜流程，結合生成式 AI 應用，協助企業員工跨越技術門檻，真正提升工作效能。
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#projects" class="px-8 py-4 bg-primary text-white rounded-lg font-medium shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        查看實作案例 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="#about" class="px-8 py-4 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-lg font-medium shadow border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300">
+                        了解更多
+                    </a>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main id="top">
-      <section class="hero">
-        <div class="hero-copy">
-          <p class="eyebrow">AI 工具教學 / 企業內訓 / 手把手工作坊</p>
-          <h1 id="profile-name">趙翊君</h1>
-          <p class="hero-title" id="profile-title"></p>
-          <p class="hero-summary" id="profile-summary"></p>
-          <div class="target-roles" aria-label="可投職稱">
-            <span>可投職稱</span>
-            <div id="target-roles"></div>
-          </div>
-          <div class="hero-actions">
-            <a href="#projects" class="button primary">查看作品</a>
-            <button class="button secondary" id="copyContact">複製聯絡資訊</button>
-          </div>
-          <div class="tag-row" id="profile-tags"></div>
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <div class="w-full md:w-1/2">
+                    <div class="relative">
+                        <!-- Professional photo -->
+                        <div class="aspect-square bg-gray-100 dark:bg-gray-800 rounded-2xl overflow-hidden shadow-inner relative">
+                             <img src="https://img.ai365.fans/cdn-cgi/image/width=1400,quality=90,format=auto/artworks/82ce0be8-9cb9-44a4-a12c-4122287e130e/nlucfmg8m98.png" alt="個人大頭照" class="object-cover w-full h-full rounded-2xl">
+                             <div class="absolute inset-0 bg-blue-900/10 dark:bg-blue-950/30 rounded-2xl"></div>
+                        </div>
+                        <!-- Decorative element -->
+                        <div class="absolute -bottom-6 -right-6 w-48 h-48 bg-blue-100 dark:bg-blue-900/20 rounded-full mix-blend-multiply filter blur-2xl opacity-70"></div>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">關於我</h2>
+                    <div class="w-20 h-1 bg-primary mb-8 rounded"></div>
+                    
+                    <div class="space-y-6 text-gray-700 dark:text-gray-300 leading-relaxed">
+                        <p class="text-lg">
+                            具備 <strong class="text-primary dark:text-blue-400">12 年以上客服、行政、理賠與培訓協作經驗</strong>。我深知企業第一線實際運作中常見的流程落差、知識整理、新人上手與人員培訓的痛點。曾擔任客服培訓師，累積了從實務執行到培訓教學的深厚經驗。
+                        </p>
+                        <p>
+                            過去長期面對客服現場的各種突發問題，讓我養成了高度的<strong>自我覺察能力</strong>。面對壓力與不確定情境時，我習慣先穩定自身狀態、釐清真正的問題核心，再尋找務實可行的方式讓事情繼續前進。
+                        </p>
+                        <blockquote class="border-l-4 border-accent pl-4 italic text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 p-4 rounded-r-lg">
+                            "我的強項不只是「會使用 AI 工具」，而是理解工具之後，進一步思考：怎麼讓原本不懂 AI 的人，也真的用得起來。"
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
         </div>
-        <figure class="hero-photo">
-          <img src="./assets/lala-portrait.png" alt="趙翊君形象照" />
-          <figcaption>更新日期 <span id="updated-at"></span></figcaption>
-        </figure>
-      </section>
+    </section>
 
-      <section class="metrics" id="highlights" aria-label="重點摘要"></section>
+    <!-- Expertise Section -->
+    <section id="expertise" class="py-20 bg-gray-50 dark:bg-gray-800/50 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">專業核心能力</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded"></div>
+                <p class="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">揉合實務經驗與新技術，打造真正落地的解決方案。</p>
+            </div>
 
-      <section class="section split">
-        <div>
-          <p class="section-kicker">Positioning</p>
-          <h2>新版履歷主軸</h2>
-          <p>
-            這一版把原本的客服、行政、培訓與 SOP 能力，重新包裝成「能理解 AI 工具、做出示範應用，並帶企業員工一步一步上手」。
-          </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 dark:border-gray-700 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-20 h-20 bg-blue-50 dark:bg-blue-900/20 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-500"></div>
+                    <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center text-primary dark:text-blue-400 text-2xl mb-6 relative z-10">
+                        <i class="fas fa-sitemap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 relative z-10 text-gray-800 dark:text-white">流程拆解與 SOP 化</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed relative z-10">
+                        擅長理解 AI 工具背後的邏輯與工作流程，將複雜工具拆解成一般員工能理解的 SOP 與教材。重視理解原理、釐清流程，找出落差並加以優化。
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 dark:border-gray-700 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-20 h-20 bg-amber-50 dark:bg-amber-900/20 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-500"></div>
+                    <div class="w-14 h-14 bg-amber-100 dark:bg-amber-900/50 rounded-lg flex items-center justify-center text-accent text-2xl mb-6 relative z-10">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 relative z-10 text-gray-800 dark:text-white">培訓教學與引導</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed relative z-10">
+                        豐富的客服培訓師經驗，能舉辦手把手工作坊。善於將生硬的技術名詞轉化為白話文，面對陌生領域也能透過問題拆解快速建立教學框架。
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 dark:border-gray-700 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-20 h-20 bg-indigo-50 dark:bg-indigo-900/20 rounded-bl-full -mr-10 -mt-10 transition-transform group-hover:scale-150 duration-500"></div>
+                    <div class="w-14 h-14 bg-indigo-100 dark:bg-indigo-900/50 rounded-lg flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-2xl mb-6 relative z-10">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 relative z-10 text-gray-800 dark:text-white">AI 工具應用與實作</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed relative z-10">
+                        持續深化生成式 AI 能力，能實際做出可操作、可示範的應用。熟悉如何與 AI 協作，快速建立理解並開發出符合企業需求的專屬工具。
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="capability-grid" id="capabilities"></div>
-      </section>
+    </section>
 
-      <section class="section" id="projects">
-        <div class="section-heading">
-          <div>
-            <p class="section-kicker">Portfolio</p>
-            <h2>互動式作品集</h2>
-          </div>
-          <div class="filters" id="filters" aria-label="作品篩選"></div>
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">生成式 AI 實作案例</h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded"></div>
+                <p class="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">透過實戰專題，展現將 AI 轉化為生產力的具體成果。</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project Item -->
+                <div class="group border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-primary dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 bg-white dark:bg-gray-800">
+                    <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/40 text-primary dark:text-blue-400 rounded-full flex items-center justify-center text-xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">AI 教材產生器</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">自動化產出標準化教材草稿，大幅縮短前置作業時間。</p>
+                </div>
+
+                <!-- Project Item -->
+                <div class="group border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-primary dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 bg-white dark:bg-gray-800">
+                    <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/40 text-primary dark:text-blue-400 rounded-full flex items-center justify-center text-xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-file-powerpoint"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">AI 簡報產生器</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">依據大綱或內容，快速生成簡報架構與初稿，提升會議準備效率。</p>
+                </div>
+
+                <!-- Project Item -->
+                <div class="group border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-primary dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 bg-white dark:bg-gray-800">
+                    <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/40 text-primary dark:text-blue-400 rounded-full flex items-center justify-center text-xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">Dify 客服知識庫</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">運用 Dify 打造智能知識庫，讓第一線人員能快速精準查詢標準解答。</p>
+                </div>
+
+                <!-- Project Item -->
+                <div class="group border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-primary dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 bg-white dark:bg-gray-800">
+                    <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/40 text-primary dark:text-blue-400 rounded-full flex items-center justify-center text-xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">QA 培訓建議工具</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">針對客服問答紀錄進行分析，自動產出針對性的培訓建議與改善方向。</p>
+                </div>
+
+                <!-- Project Item -->
+                <div class="group border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-primary dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 bg-white dark:bg-gray-800">
+                    <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/40 text-primary dark:text-blue-400 rounded-full flex items-center justify-center text-xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">企業 AI 導入評估 Agent</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">智能代理程式，協助企業初步診斷適合導入 AI 的流程節點與預期效益。</p>
+                </div>
+
+                <!-- Project Item -->
+                <div class="group border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-primary dark:hover:border-blue-400 hover:shadow-lg transition-all duration-300 bg-white dark:bg-gray-800">
+                    <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/40 text-primary dark:text-blue-400 rounded-full flex items-center justify-center text-xl mb-4 group-hover:bg-primary group-hover:text-white transition-colors">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">健身訓練紀錄 App</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm">將複雜資料結構視覺化的實作練習，展現前端介面與數據處理能力。</p>
+                </div>
+            </div>
         </div>
-        <div class="project-grid" id="project-grid"></div>
-      </section>
+    </section>
 
-      <section class="section" id="career-map">
-        <div class="section-heading">
-          <div>
-            <p class="section-kicker">Career Map</p>
-            <h2 id="career-map-title"></h2>
-          </div>
-          <p class="section-note" id="career-map-note"></p>
+    <!-- Vision Section -->
+    <section id="vision" class="py-20 bg-primary text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-8">「AI × 人 × 學習」的交會點</h2>
+            <p class="text-xl text-blue-100 leading-relaxed mb-10">
+                現階段我特別關注如何將新科技融入人的日常工作。希望結合長期的企業現場經驗、培訓能力與 AI 應用實作，探索：
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                <div class="bg-blue-800/50 p-6 rounded-lg border border-blue-700/50 backdrop-blur-sm">
+                    <div class="text-accent text-2xl mb-3"><i class="fas fa-building"></i></div>
+                    <h4 class="font-bold mb-2 text-lg">企業 AI 導入</h4>
+                    <p class="text-blue-100 text-sm">協助企業評估流程，找出高價值的 AI 切入點，並規劃平穩的過渡期。</p>
+                </div>
+                <div class="bg-blue-800/50 p-6 rounded-lg border border-blue-700/50 backdrop-blur-sm">
+                    <div class="text-accent text-2xl mb-3"><i class="fas fa-users-cog"></i></div>
+                    <h4 class="font-bold mb-2 text-lg">AI 應用培訓</h4>
+                    <p class="text-blue-100 text-sm">設計客製化教材，讓第一線員工了解「為什麼用」以及「如何用好」AI。</p>
+                </div>
+                <div class="bg-blue-800/50 p-6 rounded-lg border border-blue-700/50 backdrop-blur-sm">
+                    <div class="text-accent text-2xl mb-3"><i class="fas fa-user-graduate"></i></div>
+                    <h4 class="font-bold mb-2 text-lg">非技術人員 AI 教學</h4>
+                    <p class="text-blue-100 text-sm">跨越技術術語的高牆，用麻瓜聽得懂的語言，建立人機協作的思維。</p>
+                </div>
+            </div>
         </div>
-        <div class="role-map" id="role-map"></div>
-        <div class="learning-layout">
-          <div>
-            <h3>90 天學習路線</h3>
-            <div class="roadmap-list" id="roadmap-list"></div>
-          </div>
-          <aside class="packaging-box">
-            <h3>作品包裝格式</h3>
-            <div class="packaging-list" id="packaging-list"></div>
-            <div class="source-list" id="source-list"></div>
-          </aside>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12 text-center">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-primary transition-all duration-300">
+                    <i class="fab fa-linkedin-in text-lg"></i>
+                </a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" title="GitHub" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-all duration-300">
+                    <i class="fab fa-github text-lg"></i>
+                </a>
+                <a href="mailto:contact@example.com" title="聯絡信箱" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-accent transition-all duration-300">
+                    <i class="fas fa-envelope text-lg"></i>
+                </a>
+            </div>
+            <p>&copy; 2026 AI 應用與企業培訓專家. All rights reserved.</p>
         </div>
-      </section>
+    </footer>
 
-      <section class="section" id="experience">
-        <div class="section-heading">
-          <div>
-            <p class="section-kicker">Experience</p>
-            <h2>工作經歷</h2>
-          </div>
-          <p class="section-note">保留完整職涯脈絡，但用新版方向重寫重點。</p>
-        </div>
-        <div class="timeline" id="timeline"></div>
-      </section>
+    <!-- JavaScript for Interactivity, Theme & Audio Controls -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Navbar background change on scroll
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 10) {
+                    navbar.classList.add('shadow-md');
+                } else {
+                    navbar.classList.remove('shadow-md');
+                }
+            });
 
-      <section class="section split" id="resume104">
-        <div>
-          <p class="section-kicker">104 Draft</p>
-          <h2>104 可用摘要</h2>
-          <p>
-            這裡先作為最新版文字草稿，之後要正式投遞時再依職缺濃縮貼到 104。
-          </p>
-          <button class="button secondary" id="copy104">複製 104 摘要</button>
-        </div>
-        <div class="resume-box">
-          <h3 id="resume104-headline"></h3>
-          <p id="resume104-summary"></p>
-        </div>
-      </section>
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const closeMenuBtn = document.getElementById('close-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
 
-      <section class="section compact">
-        <p class="section-kicker">Credentials</p>
-        <h2>證照與能力</h2>
-        <div class="credential-list" id="credentials"></div>
-      </section>
-    </main>
+            function toggleMenu() {
+                mobileMenu.classList.toggle('open');
+            }
 
-    <dialog id="project-dialog">
-      <div class="dialog-shell">
-        <button class="icon-button" id="close-dialog" aria-label="關閉">×</button>
-        <p class="section-kicker" id="dialog-type"></p>
-        <h2 id="dialog-title"></h2>
-        <p id="dialog-summary"></p>
-        <div class="dialog-gallery" id="dialog-gallery"></div>
-        <div class="dialog-tools" id="dialog-tools"></div>
-        <h3>成果亮點</h3>
-        <ul id="dialog-impact"></ul>
-        <div class="dialog-links" id="dialog-links"></div>
-      </div>
-    </dialog>
+            mobileMenuBtn.addEventListener('click', toggleMenu);
+            closeMenuBtn.addEventListener('click', toggleMenu);
 
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="./resume-data.js"></script>
-    <script src="./app.js"></script>
-  </body>
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', toggleMenu);
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // --- Theme Toggle Logic ---
+            const themeToggleBtn = document.getElementById('theme-toggle-btn');
+            const themeIcon = document.getElementById('theme-icon');
+            const mobileThemeBtn = document.getElementById('mobile-theme-btn');
+            const mobileThemeIcon = document.getElementById('mobile-theme-icon');
+            const htmlElement = document.documentElement;
+
+            // Check saved theme preference
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                htmlElement.classList.add('dark');
+                themeIcon.className = 'fas fa-sun';
+                mobileThemeIcon.className = 'fas fa-sun';
+            } else {
+                htmlElement.classList.remove('dark');
+                themeIcon.className = 'fas fa-moon';
+                mobileThemeIcon.className = 'fas fa-moon';
+            }
+
+            function toggleTheme() {
+                if (htmlElement.classList.contains('dark')) {
+                    htmlElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                    themeIcon.className = 'fas fa-moon';
+                    mobileThemeIcon.className = 'fas fa-moon';
+                } else {
+                    htmlElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                    themeIcon.className = 'fas fa-sun';
+                    mobileThemeIcon.className = 'fas fa-sun';
+                }
+            }
+
+            themeToggleBtn.addEventListener('click', toggleTheme);
+            mobileThemeBtn.addEventListener('click', toggleTheme);
+
+            // --- Audio Player Logic ---
+            const bgAudio = document.getElementById('bg-audio');
+            const musicToggleBtn = document.getElementById('music-toggle-btn');
+            const musicIcon = document.getElementById('music-icon');
+            const musicWave = document.getElementById('music-wave');
+            const mobileMusicBtn = document.getElementById('mobile-music-btn');
+            const mobileMusicIcon = document.getElementById('mobile-music-icon');
+
+            let isPlaying = false;
+
+            function toggleMusic() {
+                if (isPlaying) {
+                    bgAudio.pause();
+                    musicIcon.className = 'fas fa-volume-mute';
+                    mobileMusicIcon.className = 'fas fa-volume-mute';
+                    musicWave.classList.add('hidden');
+                    isPlaying = false;
+                } else {
+                    bgAudio.play().then(() => {
+                        musicIcon.className = 'fas fa-volume-up';
+                        mobileMusicIcon.className = 'fas fa-volume-up';
+                        musicWave.classList.remove('hidden');
+                        isPlaying = true;
+                    }).catch(error => {
+                        console.log("Audio playback failed:", error);
+                    });
+                }
+            }
+
+            musicToggleBtn.addEventListener('click', toggleMusic);
+            mobileMusicBtn.addEventListener('click', toggleMusic);
+        });
+    </script>
+</body>
 </html>
