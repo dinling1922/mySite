@@ -1,36 +1,18 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+ai-clean｜斷捨離決策工具
+ai-clean 是一個幫助使用者降低「丟東西很難決定」心理負擔的互動式整理工具。
+使用者先選擇物品類別，例如衣物、書籍、3C、廚房用品、紀念品等，系統會自動標出最適合該類物品的判斷積木。每一顆積木代表一個整理思考原則，例如：
+- 現在真的有在使用嗎？
+- 如果今天沒有這個東西，還會再買一次嗎？
+- 留著它，是因為需要，還是因為「也許以後會用到」？
+- 它是屬於現在的自己，還是理想中的自己？
+點擊積木後，可以進一步查看判斷說明、常見情境、例外狀況、建議下一步，以及對應的參考書籍與作者。
+完成選擇題後，系統會根據回答整理出三種結果：
+建議保留、建議離開／送／捐／回收、建議暫存觀察。
+ai-clean 的目的不是替使用者武斷決定「丟或不丟」，而是把原本模糊的猶豫，轉成有依據、看得懂、做得到的整理決策。
+使用技術
+- Next.js 16 + App Router：網站架構
+- React 19：處理物品分類、積木互動與答題狀態
+- TypeScript：管理判斷原則、分類、題目與選項資料
+- Tailwind CSS 4：桌機／手機響應式介面
+- ESLint：程式碼檢查
+- cleanrule.md：作為整理原則與內容資料來源
