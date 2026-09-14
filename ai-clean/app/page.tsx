@@ -386,16 +386,21 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f3ee] px-4 py-6 text-[#242534] sm:px-7 lg:px-10 lg:py-10">
+    <main className="relative isolate min-h-screen bg-[#eaf3f7] px-4 py-6 text-[#242534] sm:px-7 lg:px-10 lg:py-10">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat lg:bg-fixed"
+        style={{ backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.16)), url('/images/liubai-air-sky-v2.png')" }}
+      />
       <div className="mx-auto max-w-[1500px]">
-        <header className="mb-6 flex flex-col gap-5 border-b border-[#ded8d1] pb-6 lg:mb-8 lg:flex-row lg:items-end lg:justify-between">
+        <header className="mb-6 flex flex-col gap-5 border-b border-[#1b1b1b]/15 pb-6 lg:mb-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="mb-2 text-sm font-bold tracking-[0.18em] text-[#7569b3]">CLEAN DECISION ATLAS</p>
-            <h1 className="font-serif text-4xl leading-tight tracking-tight sm:text-5xl">留白</h1>
-            <p className="mt-3 max-w-2xl text-base leading-7 text-[#62616c]">
+            <p className="mb-2 text-sm font-bold tracking-[0.18em] text-[#426188]">CLEAN DECISION ATLAS</p>
+            <h1 className="font-serif text-4xl leading-tight tracking-tight text-[#1b1b1b] sm:text-5xl">留白</h1>
+            <p className="mt-3 max-w-2xl text-base leading-7 text-[#1b1b1b]">
               為自己的生命空間，騰出更多的清爽。
             </p>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-[#62616c]">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[#394653]">
               使用說明：先選物品分類，下方出現選擇題，快速為你判斷保留／丟棄／暫存；右方可看到對應的五塊積木，點擊後對應下方積木解釋。
             </p>
           </div>
