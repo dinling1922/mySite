@@ -391,62 +391,20 @@ export default function Home() {
         <header className="mb-6 flex flex-col gap-5 border-b border-[#ded8d1] pb-6 lg:mb-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="mb-2 text-sm font-bold tracking-[0.18em] text-[#7569b3]">CLEAN DECISION ATLAS</p>
-            <h1 className="font-serif text-4xl leading-tight tracking-tight sm:text-5xl">斷捨離判斷積木</h1>
+            <h1 className="font-serif text-4xl leading-tight tracking-tight sm:text-5xl">留白</h1>
             <p className="mt-3 max-w-2xl text-base leading-7 text-[#62616c]">
-              先選物品分類，再點選一個積木。越靠上，代表越值得優先放進「離開清單」；不是一律丟掉，而是優先檢查。
+              為自己的生命空間，騰出更多的清爽。
+            </p>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[#62616c]">
+              使用說明：先選物品分類，下方出現選擇題，快速為你判斷保留／丟棄／暫存；右方可看到對應的五塊積木，點擊後對應下方積木解釋。
             </p>
           </div>
           <div className="rounded-full bg-[#e7ddff] px-4 py-2 text-sm font-semibold text-[#5c508e]">10 個判斷原則 × 9 類物品</div>
         </header>
 
-        <div className="grid gap-6 lg:grid-cols-[minmax(500px,0.85fr)_minmax(0,1.15fr)]">
-          <section aria-labelledby="rules-title" className="rounded-[28px] bg-[#eee9e2] p-4 sm:p-6">
-            <div className="mb-5 flex items-start justify-between gap-3">
-              <div>
-                <p className="text-sm font-bold text-[#7569b3]">判斷層級</p>
-                <h2 id="rules-title" className="mt-1 font-serif text-3xl">十個方格積木</h2>
-              </div>
-              <span className="rounded-full bg-[#f9e2d8] px-3 py-1.5 text-xs font-bold text-[#915348]">由上到下：淘汰優先度降低</span>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2">
-              {rules.map((rule, index) => {
-                const isRecommended = activeRuleIds.has(rule.id);
-                const isSelected = selectedRule?.id === rule.id;
-
-                return (
-                  <button
-                    key={rule.id}
-                    type="button"
-                    data-testid={`rule-${rule.id}`}
-                    aria-pressed={isSelected}
-                    onClick={() => setSelectedRuleId(rule.id)}
-                    className={`group relative min-h-40 rounded-2xl border p-5 text-left transition duration-200 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[#7569b3] ${
-                      isSelected
-                        ? "border-[#7161b7] bg-[#28273a] text-white shadow-[0_16px_30px_rgba(74,63,132,0.28)]"
-                        : isRecommended
-                          ? "border-[#a597e8] bg-white shadow-[inset_5px_0_0_#7c6cc6,0_10px_24px_rgba(115,99,175,0.14)]"
-                          : "border-transparent bg-[#faf9f7] text-[#474652] opacity-60 hover:opacity-100"
-                    }`}
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <span className={`grid size-9 place-items-center rounded-full text-sm font-bold ${isSelected ? "bg-[#cfc3ff] text-[#39305f]" : "bg-[#ece8e3] text-[#706e78]"}`}>
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      {isRecommended && !isSelected && <span className="rounded-full bg-[#eee9ff] px-2.5 py-1 text-[11px] font-bold text-[#6857aa]">此分類適用</span>}
-                      {isSelected && <span className="rounded-full bg-[#f2bcae] px-2.5 py-1 text-[11px] font-bold text-[#4e3041]">已選取</span>}
-                    </div>
-                    <p className={`mt-5 text-xs font-bold tracking-wider ${isSelected ? "text-[#d8d0ff]" : "text-[#8778bc]"}`}>{rule.priority}</p>
-                    <h3 className="mt-1 text-lg font-bold leading-snug">{rule.title}</h3>
-                    <p className={`mt-2 text-sm leading-6 ${isSelected ? "text-[#e4e1ed]" : "text-[#6c6a76]"}`}>{rule.short}</p>
-                  </button>
-                );
-              })}
-            </div>
-          </section>
-
+        <div className="grid gap-6 lg:grid-cols-[minmax(400px,0.85fr)_minmax(500px,1.15fr)]">
           <div className="flex flex-col gap-6">
-            <section aria-labelledby="category-title" className="order-2 rounded-[28px] border border-[#ded8d1] bg-[#fcfbf9] p-5 sm:p-6">
+            <section aria-labelledby="category-title" className="rounded-[28px] border border-[#ded8d1] bg-[#fcfbf9] p-5 sm:p-6">
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <p className="text-sm font-bold text-[#7569b3]">選擇整理對象</p>
@@ -480,7 +438,99 @@ export default function Home() {
               </p>
             </section>
 
-            <section aria-live="polite" className="order-1 rounded-[28px] bg-[#28273a] p-6 text-white shadow-[0_16px_32px_rgba(34,33,48,0.18)]">
+            <section aria-labelledby="quiz-title" className="rounded-[28px] border border-[#ded8d1] bg-[#fcfbf9] p-5 sm:p-6">
+              <p className="text-sm font-bold text-[#7569b3]">把原則用在眼前物品</p>
+              <h2 id="quiz-title" className="mt-1 font-serif text-3xl">{selectedCategory.name} 快速選擇題</h2>
+              <p className="mt-3 rounded-xl bg-[#f1eeff] px-3 py-2 text-sm leading-6 text-[#565070]">
+                每題都以「值得保留嗎？」的方向問：左邊選項＝保留，中間選項＝離開，右邊選項＝先暫存。
+              </p>
+              <div className="mt-5 space-y-4">
+                {selectedCategory.questions.map((question, index) => {
+                  const answerKey = `${selectedCategory.id}-${index}`;
+                  return (
+                    <fieldset key={question.text} className="rounded-2xl bg-[#f4f1ed] p-4">
+                      <legend className="sr-only">{question.text}</legend>
+                      <p className="font-semibold leading-6 text-[#363543]">{index + 1}. {question.text}</p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {question.choices.map((choice) => {
+                          const isSelected = answers[answerKey] === choice.decision;
+                          return (
+                            <button
+                              key={choice.decision}
+                              type="button"
+                              aria-pressed={isSelected}
+                              onClick={() => setAnswers((current) => ({ ...current, [answerKey]: choice.decision }))}
+                              className={`rounded-full border px-3 py-1.5 text-sm transition focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[#7569b3] ${
+                                isSelected
+                                  ? "border-[#7569b3] bg-[#7569b3] text-white"
+                                  : "border-[#d7d1ca] bg-white text-[#5d5a64] hover:border-[#9b8fd1]"
+                              }`}
+                            >
+                              {choice.label}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </fieldset>
+                  );
+                })}
+              </div>
+              <div data-testid="recommendation" className={`mt-5 rounded-2xl p-4 ring-1 ${recommendation.tone}`}>
+                <p className="text-xs font-bold tracking-[0.14em]">判斷結果</p>
+                <h3 className="mt-1 text-lg font-bold">{recommendation.label}</h3>
+                <p className="mt-2 text-sm leading-6">{recommendation.description}</p>
+              </div>
+              <p className="mt-5 text-sm leading-6 text-[#706d76]">卡住時：先把物品放進「猶豫箱」，標記日期；1～3 個月未拿出來使用，再列為優先淘汰。</p>
+            </section>
+          </div>
+
+          <div className="flex flex-col gap-6">
+            <section aria-labelledby="rules-title" className="rounded-[28px] bg-[#eee9e2] p-4 sm:p-6">
+              <div className="mb-5 flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-sm font-bold text-[#7569b3]">判斷層級</p>
+                  <h2 id="rules-title" className="mt-1 font-serif text-3xl">十個方格積木</h2>
+                </div>
+                <span className="rounded-full bg-[#f9e2d8] px-3 py-1.5 text-xs font-bold text-[#915348]">由上到下：淘汰優先度降低</span>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                {rules.map((rule, index) => {
+                  const isRecommended = activeRuleIds.has(rule.id);
+                  const isSelected = selectedRule?.id === rule.id;
+
+                  return (
+                    <button
+                      key={rule.id}
+                      type="button"
+                      data-testid={`rule-${rule.id}`}
+                      aria-pressed={isSelected}
+                      onClick={() => setSelectedRuleId(rule.id)}
+                      className={`group relative rounded-2xl border p-5 text-left transition duration-200 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[#7569b3] ${
+                        isSelected
+                          ? "border-[#7161b7] bg-[#28273a] text-white shadow-[0_16px_30px_rgba(74,63,132,0.28)]"
+                          : isRecommended
+                            ? "border-[#a597e8] bg-white shadow-[inset_5px_0_0_#7c6cc6,0_10px_24px_rgba(115,99,175,0.14)]"
+                            : "border-transparent bg-[#faf9f7] text-[#474652] opacity-60 hover:opacity-100"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className={`grid size-9 place-items-center rounded-full text-sm font-bold ${isSelected ? "bg-[#cfc3ff] text-[#39305f]" : "bg-[#ece8e3] text-[#706e78]"}`}>
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <p className={`text-xs font-bold tracking-wider ${isSelected ? "text-[#d8d0ff]" : "text-[#8778bc]"}`}>{rule.priority}</p>
+                        {isRecommended && !isSelected && <span className="ml-auto rounded-full bg-[#eee9ff] px-2.5 py-1 text-[11px] font-bold text-[#6857aa]">適用此分類</span>}
+                        {isSelected && <span className="ml-auto rounded-full bg-[#f2bcae] px-2.5 py-1 text-[11px] font-bold text-[#4e3041]">已選取</span>}
+                      </div>
+                      <h3 className="mt-5 text-lg font-bold leading-snug">{rule.title}</h3>
+                      <p className={`mt-2 text-sm leading-6 ${isSelected ? "text-[#e4e1ed]" : "text-[#6c6a76]"}`}>{rule.short}</p>
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+
+            <section aria-live="polite" className="rounded-[28px] bg-[#28273a] p-6 text-white shadow-[0_16px_32px_rgba(34,33,48,0.18)]">
               {selectedRule ? (
                 <>
                   <p className="text-sm font-bold tracking-[0.16em] text-[#cfc3ff]">目前選取的判斷原則</p>
@@ -524,55 +574,10 @@ export default function Home() {
                   <p className="text-sm font-bold tracking-[0.16em] text-[#cfc3ff]">下一步</p>
                   <h2 className="mt-3 font-serif text-3xl leading-tight">點選一個發亮積木</h2>
                   <p className="mt-4 max-w-xl border-t border-white/20 pt-4 text-base leading-7 text-[#e4e1ed]">
-                    你已選擇「{selectedCategory.name}」。左側發亮的積木是這個分類最適用的判斷原則；點其中一顆，就會在這裡看到完整說明、物品類別與參考書目。
+                    你已選擇「{selectedCategory.name}」。上方發亮的積木是這個分類最適用的判斷原則；點其中一顆，就會在這裡看到完整說明、物品類別與參考書目。
                   </p>
                 </div>
               )}
-            </section>
-
-            <section aria-labelledby="quiz-title" className="order-3 rounded-[28px] border border-[#ded8d1] bg-[#fcfbf9] p-5 sm:p-6">
-              <p className="text-sm font-bold text-[#7569b3]">把原則用在眼前物品</p>
-              <h2 id="quiz-title" className="mt-1 font-serif text-3xl">{selectedCategory.name} 快速選擇題</h2>
-              <p className="mt-3 rounded-xl bg-[#f1eeff] px-3 py-2 text-sm leading-6 text-[#565070]">
-                每題都以「值得保留嗎？」的方向問：左邊選項＝保留，中間選項＝離開，右邊選項＝先暫存。
-              </p>
-              <div className="mt-5 space-y-4">
-                {selectedCategory.questions.map((question, index) => {
-                  const answerKey = `${selectedCategory.id}-${index}`;
-                  return (
-                    <fieldset key={question.text} className="rounded-2xl bg-[#f4f1ed] p-4">
-                      <legend className="sr-only">{question.text}</legend>
-                      <p className="font-semibold leading-6 text-[#363543]">{index + 1}. {question.text}</p>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {question.choices.map((choice) => {
-                          const isSelected = answers[answerKey] === choice.decision;
-                          return (
-                            <button
-                              key={choice.decision}
-                              type="button"
-                              aria-pressed={isSelected}
-                              onClick={() => setAnswers((current) => ({ ...current, [answerKey]: choice.decision }))}
-                              className={`rounded-full border px-3 py-1.5 text-sm transition focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[#7569b3] ${
-                                isSelected
-                                  ? "border-[#7569b3] bg-[#7569b3] text-white"
-                                  : "border-[#d7d1ca] bg-white text-[#5d5a64] hover:border-[#9b8fd1]"
-                              }`}
-                            >
-                              {choice.label}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </fieldset>
-                  );
-                })}
-              </div>
-              <div data-testid="recommendation" className={`mt-5 rounded-2xl p-4 ring-1 ${recommendation.tone}`}>
-                <p className="text-xs font-bold tracking-[0.14em]">判斷結果</p>
-                <h3 className="mt-1 text-lg font-bold">{recommendation.label}</h3>
-                <p className="mt-2 text-sm leading-6">{recommendation.description}</p>
-              </div>
-              <p className="mt-5 text-sm leading-6 text-[#706d76]">卡住時：先把物品放進「猶豫箱」，標記日期；1～3 個月未拿出來使用，再列為優先淘汰。</p>
             </section>
           </div>
         </div>
